@@ -6,7 +6,7 @@ from RPA.Excel.Files import Files as Excel
 
 # Set your username and password. Robocorp Vault is recommended 
 # Set the HEADLESS argument to True for faster execution without the visible browser. 
-USERNAME = "first.last@example.com"
+USERNAME = "eki@example.com"
 PASSWORD = "MyPassword"
 HEADLESS = False 
 
@@ -45,12 +45,11 @@ def solve_challenge():
         page.add_script_tag(content="document.querySelector('.CustomElement').remove();")
         page.add_script_tag(content="document.querySelector('.greyout').remove();")
         page.add_script_tag(content="document.querySelector('.Popup').remove();")
-
         for field in field_names:
-             text_content, spreadsheet_header = field
-             input_selector = f'//div[@class="bubble-element Group"][.="{text_content}"][not(ancestor-or-self::*[contains(@style,"display: none;")])]//input'
-             element = page.query_selector(input_selector)
-             element.fill(row[spreadsheet_header])
+            text_content, spreadsheet_header = field
+            input_selector = f'//div[@class="bubble-element Group"][.="{text_content}"][not(ancestor-or-self::*[contains(@style,"display: none;")])]//input'
+            element = page.query_selector(input_selector)
+            page.fill(input_selector,row[spreadsheet_header])
        
         page.get_by_role("button", name="Submit").click()
 
